@@ -2,34 +2,46 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover, user-scalable=no">
     <title>Citizens Reporting Solution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="app">
         <!-- Login Screen -->
         <div id="login-screen" class="screen active">
-            <h2>Citizens Reporting App</h2>
-            <p>Login to report and view incidents.</p>
-            <input type="text" id="username" placeholder="Enter your username">
-            <button id="btn-login" class="btn primary">Login</button>
+            <div class="login-container">
+                <div class="logo-box">
+                    <span class="logo-icon">🛡️</span>
+                    <h2>CivicWatch</h2>
+                    <p class="subtitle">Empowering Citizens, Ensuring Safety.</p>
+                </div>
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="username" placeholder="e.g. John Doe">
+                </div>
+                <button id="btn-login" class="btn primary pulse">Access Dashboard</button>
+            </div>
         </div>
 
         <!-- Main Dashboard Screen -->
         <div id="main-screen" class="screen">
             <div class="header">
-                <h3>Incident Feed</h3>
-                <span id="user-display"></span>
+                <div class="header-title">
+                    <span class="logo-icon-small">🛡️</span>
+                    <h3>Incident Feed</h3>
+                </div>
+                <div class="user-badge"><span id="user-display"></span></div>
             </div>
             
             <div class="filter-bar">
-                <select id="filter-category">
-                    <option value="All">All Categories</option>
-                    <option value="Accident">Accident</option>
-                    <option value="Fighting">Fighting</option>
-                    <option value="Rioting">Rioting</option>
-                    <option value="Other">Other</option>
+                <select id="filter-category" class="styled-select">
+                    <option value="All">🌐 All Categories</option>
+                    <option value="Accident">🚗 Accident</option>
+                    <option value="Fighting">🥊 Fighting</option>
+                    <option value="Rioting">🔥 Rioting</option>
+                    <option value="Other">❓ Other</option>
                 </select>
             </div>
 
@@ -43,44 +55,83 @@
             <div class="header">
                 <h3>Report New Incident</h3>
             </div>
-            <div class="content-area form-area">
-                <input type="text" id="inc-title" placeholder="Incident Title">
-                <textarea id="inc-desc" placeholder="Details..."></textarea>
-                
-                <select id="inc-category">
-                    <option value="Accident">Accident</option>
-                    <option value="Fighting">Fighting</option>
-                    <option value="Rioting">Rioting</option>
-                    <option value="Other">Other</option>
-                </select>
-                
-                <button id="btn-location" class="btn secondary">Get GPS Location</button>
-                <div id="loc-display">No location active</div>
-                
-                <button id="btn-photo" class="btn secondary">Attach Picture</button>
-                <input type="file" id="camera-input" accept="image/*" capture="camera" style="display:none;">
-                <img id="photo-preview" style="display:none; max-width: 100%; margin-top: 10px;">
-                
-                <button id="btn-submit" class="btn primary">Submit Report</button>
+            <div class="content-area">
+                <div class="form-area">
+                    <div class="input-group">
+                        <label>Incident Title</label>
+                        <input type="text" id="inc-title" placeholder="What happened?">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Category</label>
+                        <select id="inc-category" class="styled-select">
+                            <option value="Accident">🚗 Accident</option>
+                            <option value="Fighting">🥊 Fighting</option>
+                            <option value="Rioting">🔥 Rioting</option>
+                            <option value="Other">❓ Other</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Description</label>
+                        <textarea id="inc-desc" placeholder="Provide detailed information..."></textarea>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="btn-location" class="btn secondary">📍 Attach My Location</button>
+                        <div id="loc-display">Location pending...</div>
+                        
+                        <button id="btn-photo" class="btn secondary">📸 Capture Evidence</button>
+                        <input type="file" id="camera-input" accept="image/*" capture="camera" style="display:none;">
+                        <img id="photo-preview" style="display:none;" class="photo-preview-box">
+                    </div>
+                    
+                    <button id="btn-submit" class="btn primary block-btn">Submit Report to Server</button>
+                </div>
             </div>
         </div>
 
         <!-- My Reports Screen -->
         <div id="profile-screen" class="screen">
             <div class="header">
-                <h3>My Submitted Reports</h3>
-                <button id="btn-logout" class="btn small">Logout</button>
+                <h3>My Profile</h3>
+                <button id="btn-logout" class="btn small danger">Logout</button>
             </div>
-            <div id="my-feed" class="content-area">
-                <!-- User's incidents injected here -->
+            <div class="content-area">
+                
+                <!-- Profile Settings -->
+                <div class="settings-card">
+                    <h4>⚙️ Profile Settings</h4>
+                    <p class="settings-desc">Update your personal information below.</p>
+                    <div class="input-group">
+                        <label>Display Name</label>
+                        <input type="text" id="setting-username" placeholder="Update your name">
+                    </div>
+                    <button id="btn-save-profile" class="btn primary small-block">Save Changes</button>
+                    <div id="profile-msg" class="success-msg"></div>
+                </div>
+
+                <h4 class="section-title">📂 My Submitted Reports</h4>
+                <div id="my-feed">
+                    <!-- User's incidents injected here -->
+                </div>
             </div>
         </div>
 
         <!-- Bottom Navigation Menu -->
         <div id="bottom-nav">
-            <button class="nav-btn active" data-target="main-screen">Feed</button>
-            <button class="nav-btn" data-target="add-screen">Report</button>
-            <button class="nav-btn" data-target="profile-screen">My Profile</button>
+            <button class="nav-btn active" data-target="main-screen">
+                <span class="nav-icon">📰</span>
+                <span class="nav-text">Feed</span>
+            </button>
+            <button class="nav-btn" data-target="add-screen">
+                <span class="nav-icon">➕</span>
+                <span class="nav-text">Report</span>
+            </button>
+            <button class="nav-btn" data-target="profile-screen">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </button>
         </div>
     </div>
     
