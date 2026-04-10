@@ -1,0 +1,63 @@
+name: Build Citizens Reporting APK
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Cordova
+        run: npm install -g cordova@12.0.0
+
+      - name: Prepare Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+        
+      - name: Add Android Platform
+        run: |
+          cd app
+          cordova platform add android@12.0.0 || cordova platform add android
+          
+      - name: Build APK (Debug)
+        run: |
+          cd app
+          cordova build android
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CitizensApp-APK
+          path: app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+          
+      - name: Upload Source Materials (WWW + Config)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Submission-Files
+          path: |
+            app/www/
+            app/config.xml

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <title>Citizens Reporting Solution</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Screen -->
+        <div id="login-screen" class="screen active">
+            <h2>Citizens Reporting App</h2>
+            <p>Login to report and view incidents.</p>
+            <input type="text" id="username" placeholder="Enter your username">
+            <button id="btn-login" class="btn primary">Login</button>
+        </div>
+
+        <!-- Main Dashboard Screen -->
+        <div id="main-screen" class="screen">
+            <div class="header">
+                <h3>Incident Feed</h3>
+                <span id="user-display"></span>
+            </div>
+            
+            <div class="filter-bar">
+                <select id="filter-category">
+                    <option value="All">All Categories</option>
+                    <option value="Accident">Accident</option>
+                    <option value="Fighting">Fighting</option>
+                    <option value="Rioting">Rioting</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div id="feed" class="content-area">
+                <!-- Incidents injected here via JS -->
+            </div>
+        </div>
+
+        <!-- Add Incident Screen -->
+        <div id="add-screen" class="screen">
+            <div class="header">
+                <h3>Report New Incident</h3>
+            </div>
+            <div class="content-area form-area">
+                <input type="text" id="inc-title" placeholder="Incident Title">
+                <textarea id="inc-desc" placeholder="Details..."></textarea>
+                
+                <select id="inc-category">
+                    <option value="Accident">Accident</option>
+                    <option value="Fighting">Fighting</option>
+                    <option value="Rioting">Rioting</option>
+                    <option value="Other">Other</option>
+                </select>
+                
+                <button id="btn-location" class="btn secondary">Get GPS Location</button>
+                <div id="loc-display">No location active</div>
+                
+                <button id="btn-photo" class="btn secondary">Attach Picture</button>
+                <input type="file" id="camera-input" accept="image/*" capture="camera" style="display:none;">
+                <img id="photo-preview" style="display:none; max-width: 100%; margin-top: 10px;">
+                
+                <button id="btn-submit" class="btn primary">Submit Report</button>
+            </div>
+        </div>
+
+        <!-- My Reports Screen -->
+        <div id="profile-screen" class="screen">
+            <div class="header">
+                <h3>My Submitted Reports</h3>
+                <button id="btn-logout" class="btn small">Logout</button>
+            </div>
+            <div id="my-feed" class="content-area">
+                <!-- User's incidents injected here -->
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Menu -->
+        <div id="bottom-nav">
+            <button class="nav-btn active" data-target="main-screen">Feed</button>
+            <button class="nav-btn" data-target="add-screen">Report</button>
+            <button class="nav-btn" data-target="profile-screen">My Profile</button>
+        </div>
+    </div>
+    
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
